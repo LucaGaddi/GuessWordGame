@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Ruota della Fortuna Fusine</title>
+</head>
+
+<body>
+    <div class="wrapper">
+        <h1>Fusine: La Ruota della Fortuna</h1>
+        <div class="content">
+            <input type="text" class="typing-input" maxlength="1">
+            <div class="inputs"></div>
+            <div class="details">
+                <p class="hint">Suggerimento: <span></span></p>
+                <p class="guess-left">Tentativi rimasti: <span></span></p>
+                <p class="wrong-letter">Lettere sbagliate: <span style="text-transform: uppercase;"></span></p>
+            </div>
+            <button class="reset-btn">Nuova Parola</button>
+        </div>
+    </div>
+
+    <!-- ------------------- Lista delle parole ------------------- -->
+    <script>
+        const wordList = [
+
+    {
+        "word": "colosseo-di-roma",
+        "hint": "Vi ci combattevano i gladiatori"
+    },
+    {
+        "word": "pizza-margherita",
+        "hint": "piatto tipico italiano"
+    },
+    {
+        "word": "torre-di-pisa",
+        "hint": "pendente"
+    },
+    {
+        "word": "leonardo-da-vinci",
+        "hint": "personaggio storico"
+    },
+    {
+        "word": "la-divina-commedia",
+        "hint": "opera letteraria"
+    },
+    {
+        "word": "vinsero-battaglie-grazie-alla-loro-foga",
+        "hint": "amazzoni (attenzione alle vocali :P)"
+    }
+        ]
+
+
+        // Variabile globale
+        let word = "";
+        let incorrects = [];
+        let corrects = [];
+        let maxGuesses;
+        let usedWords = [];
+
+        // ------------------- Logica del Programma  ------------------- //
+
+        const inputs = document.querySelector(".inputs"),
+            resetBtn = document.querySelector(".reset-btn"),
+            hint = document.querySelector(".hint span"),
+            guessLeft = document.querySelector(".guess-left span"),
+            wrongLetter = document.querySelector(".wrong-letter span"),
+            typingInput = document.querySelector(".typing-input");
+
+        function parolaRandom() {
+            if (usedWords.length === wordList.length) {
+                alert("Non ci sono più frasi disponibili! :(");
+                return;
+            }
+
+            do {
+                ranObj = wordList[Math.floor(Math.random() * wordList.length)];
+            } while (usedWords.includes(ranObj.word));
+
+            usedWords.push(ranObj.word);
+            word = ranObj.word;
+            maxGuesses = 8;     //se si vuole impostare un numero di errori massimi
+            corrects = [];
+            incorrects = [];
+
+
+            hint.innerText = ranObj.hint;
+            guessLeft.innerText = maxGuesses;
+            wrongLetter.innerText = incorrects;
+
+            let html = "";
+            word.split('').forEach(element => {
+                if (element === '-') {
+                    html += `<input type="text" disabled style="color: #1bb295; background: #1bb295;">`; // Stile per lo spazio
+                    corrects.push("-")
+                } else {
+                    html += `<input type="text" disabled>`;
+                }
+            });
+            inputs.innerHTML = html;
+        }
+
+
+
+        function InitGame(e) {
+            let key = e.target.value;
+            if (key.match(/^[A-Za-z]+$/) && !incorrects.includes(`${key}`) && !corrects.includes(key)) {
+
+                if (word.includes(key)) {   // se la lettera viene trovata
+                    for (let i = 0; i < word.length; i++) {
+                        if (word[i] === key) {
+                            corrects.push(key);
+                            inputs.querySelectorAll("input")[i].value = key;
+                        }
+                    }
+
+                } else {
+                    incorrects.push(`${key}`); // se non trovata la aggiungiamo alla lista delle lettere sbagliate
+                    maxGuesses--; // decrementa i tentativi rimanenti (rimuovere nel caso non si voglia usare questa meccanica)
+                }
+                wrongLetter.innerText = incorrects;
+                guessLeft.innerText = maxGuesses;
+            }
+
+            typingInput.value = "";
+
+            setTimeout(() => {
+                if (corrects.length === word.length) {
+                    alert("Congratulazioni!")
+                    parolaRandom();
+                }
+
+                if (maxGuesses < 1) {
+                    alert("Game Over! Non ti sono rimasti altri tentativi")
+                    for (let i = 0; i < word.length; i++) {
+                        inputs.querySelectorAll("input")[i].value = word[i]; //Mostra la parola segreta
+                    }
+                }
+            });
+
+        }
+
+
+        resetBtn.addEventListener("click", parolaRandom);
+        typingInput.addEventListener("input", InitGame);
+        inputs.addEventListener("click", () => typingInput.focus());
+        document.addEventListener("keydown", () => typingInput.focus());
+    </script>
+
+</body>
+
+</html>
