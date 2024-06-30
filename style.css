@@ -42,8 +42,8 @@ background: #1bb295;
 }
 
 .inputs input{  /*Settaggio dimensione dei blocchi per le lettere*/
-    height: 77px;
-    width: 76px;
+    height: 57px;
+    width: 56px;
     margin: 4px;
     background: none;
     border-radius: 5px;

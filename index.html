@@ -16,7 +16,7 @@
             <div class="inputs"></div>
             <div class="details">
                 <p class="hint">Suggerimento: <span></span></p>
-                <p class="guess-left">Tentativi rimasti: <span></span></p>
+                <!--<p class="guess-left">Tentativi rimasti: <span></span></p>-->
                 <p class="wrong-letter">Lettere sbagliate: <span style="text-transform: uppercase;"></span></p>
             </div>
             <button class="reset-btn">Nuova Parola</button>
@@ -26,39 +26,96 @@
     <!-- ------------------- Lista delle parole ------------------- -->
     <script>
         const wordList = [
-
     {
-        "word": "colosseo-di-roma",
-        "hint": "Vi ci combattevano i gladiatori"
+        "word": "passeggiata-sulla-diga-nazario-sauro",
+        "hint": "GRADO"
     },
     {
-        "word": "pizza-margherita",
-        "hint": "piatto tipico italiano"
+        "word": "la-mitica-festa-dell-uva-a-settembre",
+        "hint": "CORMONS"
     },
     {
-        "word": "torre-di-pisa",
-        "hint": "pendente"
+        "word": "i-ricchi-e-poveri-cantano-ma-non-tutta-la-vita",
+        "hint": "SANREMO"
     },
     {
-        "word": "leonardo-da-vinci",
-        "hint": "personaggio storico"
+        "word": "controllo-del-biglietto-prima-di-salire-a-bordo",
+        "hint": "IN VIAGGIO"
     },
     {
-        "word": "la-divina-commedia",
-        "hint": "opera letteraria"
+        "word": "l-italia-vince-i-mondiali-con-il-rigore-finale-di-grosso",
+        "hint": "2006"
     },
     {
-        "word": "vinsero-battaglie-grazie-alla-loro-foga",
-        "hint": "amazzoni (attenzione alle vocali :P)"
+        "word": "la-banda-e-il-professore-rapinano-la-zecca-di-stato",
+        "hint": "CASA DI CARTA"
+    },
+    {
+        "word": "per-girare-bisogna-inserire-la-freccia",
+        "hint": "IN MACCHINA"
+    },
+    {
+        "word": "il-professore-di-storia-spiega-le-guerre-puniche",
+        "hint": "A SCUOLA"
+    },
+    {
+        "word": "michael-jordan-e-magic-johnson-facevano-parte-del-dream-team",
+        "hint": "BASKET"
+    },
+    {
+        "word": "bisogna-sempre-mettersi-in-gioco",
+        "hint": "AL CAMPO"
+    },
+    {
+        "word": "la-basilica-di-san-pietro-e-la-chiesa-piu-grande-al-mondo",
+        "hint": "A ROMA"
+    },
+    {
+        "word": "campione-del-mondo-di-salto-in-alto-e-capitano-della-nazionale-di-atletica",
+        "hint": "GIANMARCO TAMBERI"
+    },
+    {
+        "word": "prenoti-un-appuntamento-per-un-taglio-e-una-piega",
+        "hint": "DAL PARRUCCHIERE"
+    },
+    {
+        "word": "non-rimandare-a-domani-quello-che-potresti-fare-oggi",
+        "hint": "PROVERBI"
+    },
+    {
+        "word": "leonardo-da-vinci-il-genio-del-rinascimento",
+        "hint": "ARTE"
+    },
+    {
+        "word": "freddie-mercury-frontman-dei-queen",
+        "hint": "MUSICA"
+    },
+    {
+        "word": "incoronazione-di-carlo-magno",
+        "hint": "A NATALE"
+    },
+    {
+        "word": "essere-o-non-essere-questo-e-il-dilemma",
+        "hint": "AMLETO"
+    },
+    {
+        "word": "le-scarpe-da-ginnastica-sono-fondamentali-per-l-allenamento",
+        "hint": "USO QUOTIDIANO"
+    },
+    {
+        "word": "chi-ben-comincia-e-gia-a-meta-dell-opera",
+        "hint": "DETTO"
     }
-        ]
+]
+
+
 
 
         // Variabile globale
         let word = "";
         let incorrects = [];
         let corrects = [];
-        let maxGuesses;
+        //let maxGuesses;
         let usedWords = [];
 
         // ------------------- Logica del Programma  ------------------- //
@@ -82,13 +139,13 @@
 
             usedWords.push(ranObj.word);
             word = ranObj.word;
-            maxGuesses = 8;     //se si vuole impostare un numero di errori massimi
+            //maxGuesses = 8;     //se si vuole impostare un numero di errori massimi
             corrects = [];
             incorrects = [];
 
 
             hint.innerText = ranObj.hint;
-            guessLeft.innerText = maxGuesses;
+            //guessLeft.innerText = maxGuesses;
             wrongLetter.innerText = incorrects;
 
             let html = "";
@@ -119,10 +176,10 @@
 
                 } else {
                     incorrects.push(`${key}`); // se non trovata la aggiungiamo alla lista delle lettere sbagliate
-                    maxGuesses--; // decrementa i tentativi rimanenti (rimuovere nel caso non si voglia usare questa meccanica)
+                    //maxGuesses--; // decrementa i tentativi rimanenti (rimuovere nel caso non si voglia usare questa meccanica)
                 }
                 wrongLetter.innerText = incorrects;
-                guessLeft.innerText = maxGuesses;
+                //guessLeft.innerText = maxGuesses;
             }
 
             typingInput.value = "";
@@ -132,13 +189,14 @@
                     alert("Congratulazioni!")
                     parolaRandom();
                 }
-
+            /*    
                 if (maxGuesses < 1) {
                     alert("Game Over! Non ti sono rimasti altri tentativi")
                     for (let i = 0; i < word.length; i++) {
                         inputs.querySelectorAll("input")[i].value = word[i]; //Mostra la parola segreta
                     }
                 }
+            */
             });
 
         }
